@@ -37,7 +37,12 @@ void Elevator::Gtfo()
 
 int Elevator::findNext()
 {
-	return 0;
+	if (dir == 1) {
+		return upQ[0].dest;
+	}
+	else if (dir == 0) {
+		return downQ[0].dest;
+	}
 }
 
 void Elevator::move(int floor)
