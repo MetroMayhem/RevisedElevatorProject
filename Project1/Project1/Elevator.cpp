@@ -24,10 +24,14 @@ void Elevator::Add(requests req) {
 
 void Elevator::Gtfo()
 {
-	if (upQ[0].dest == *curr)
-		upQ.erase(upQ.begin());
-	if (upQ[0].dest == *curr)
-		upQ.erase(upQ.begin());
+	if (dir == 1) {
+		if (upQ[0].dest == *curr)
+			upQ.erase(upQ.begin());
+	}
+	else if (dir == 0) {
+		if (downQ[0].dest == *curr)
+			downQ.erase(downQ.begin());
+	}
 
 }
 
