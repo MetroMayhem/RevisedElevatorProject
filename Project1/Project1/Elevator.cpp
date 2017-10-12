@@ -9,6 +9,7 @@ Elevator::Elevator()
 	vector<requests> upQ;
 	vector<requests> downQ;
 	vector<requests>::iterator req;
+	bool dir;
 
 }
 
