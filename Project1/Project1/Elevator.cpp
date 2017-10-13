@@ -9,6 +9,7 @@ Elevator::Elevator()
 	vector<requests> upQ;
 	vector<requests> downQ;
 	vector<requests>::iterator req;
+	bool dir;
 
 }
 
@@ -68,16 +69,25 @@ void Elevator::Add(requests req) {
 
 void Elevator::Gtfo()
 {
-	if (upQ[0].dest == *curr)
-		upQ.erase(upQ.begin());
-	if (upQ[0].dest == *curr)
-		upQ.erase(upQ.begin());
+	if (dir == 1) {
+		if (upQ[0].dest == *curr)
+			upQ.erase(upQ.begin());
+	}
+	else if (dir == 0) {
+		if (downQ[0].dest == *curr)
+			downQ.erase(downQ.begin());
+	}
 
 }
 
 int Elevator::findNext()
 {
-	return 0;
+	if (dir == 1) {
+		return upQ[0].dest;
+	}
+	else if (dir == 0) {
+		return downQ[0].dest;
+	}
 }
 
 void Elevator::move(int floor)
