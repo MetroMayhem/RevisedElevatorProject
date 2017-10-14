@@ -19,6 +19,18 @@ Elevator::~Elevator()
 {
 }
 
+void Elevator::getUpQ()
+{
+	for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
+		cout << *itr;
+}
+
+void Elevator::getDownQ()
+{
+	for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
+		cout << *itr;
+}
+
 void Elevator::Add(requests req) {
 	//Function takes into consideration where in the queue the request needs to be based on where the elevator is
 	//as well as where the request is coming from
@@ -49,7 +61,7 @@ void Elevator::Add(requests req) {
 					upQ.push_back(req);
 					break;
 				}
-				else if (iter->curr < req.curr && iter->curr < downQ[0].curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
+				else if (iter->curr < req.curr && iter->curr < upQ[0].curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
 					upQ.insert(iter, req);
 					break;
 				}
@@ -119,4 +131,5 @@ int Elevator::findNext()
 
 void Elevator::move(int floor)
 {
+
 }

@@ -20,6 +20,8 @@ public:
 	Elevator();		//
 	Elevator(int _floors);	//
 	~Elevator();
+	void getUpQ();
+	void getDownQ();
 	void Add(requests req);
 	void Gtfo();
 	int findNext();
