@@ -18,6 +18,7 @@ private:
 
 public:
 	Elevator();
+	Elevator(list<int> _floors);
 	~Elevator();
 	void Add(requests req);
 	void Gtfo();

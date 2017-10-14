@@ -13,6 +13,18 @@ Elevator::Elevator()
 
 }
 
+Elevator::Elevator(list<int> _floors)
+{
+	list<int> floors = _floors;
+	list<int>::iterator curr = floors.begin();
+	vector<requests> upQ;
+	vector<requests> downQ;
+	vector<requests>::iterator req;
+	bool dir;
+}
+
+
+
 
 Elevator::~Elevator()
 {
