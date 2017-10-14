@@ -5,8 +5,6 @@
 Elevator::Elevator() { 
 	floors.push_back(0);
 	curr = floors.begin();
-	//upQ.push_back(requests(0, 0, 1, 0));
-	//downQ.push_back(requests(0, 0, 0, 0));
 	dir = 1;
 }
 
@@ -14,8 +12,6 @@ Elevator::Elevator(int _floors) {
 	for (int i = 0; i < _floors; i++)
 		floors.push_back(i);
 	curr = floors.begin();
-	//upQ.push_back(requests(0, 0, 1, 0));
-	//downQ.push_back(requests(0, 0, 0, 0));
 	dir = 1;
 }
 
@@ -53,7 +49,7 @@ void Elevator::Add(requests req) {
 					upQ.push_back(req);
 					break;
 				}
-				else if (iter->curr < req.curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
+				else if (iter->curr < req.curr && iter->curr < downQ[0].curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
 					upQ.insert(iter, req);
 					break;
 				}
@@ -85,7 +81,7 @@ void Elevator::Add(requests req) {
 					downQ.push_back(req);
 					break;
 				}
-				else if (iter->curr > req.curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
+				else if (iter->curr > req.curr && iter->curr > downQ[0].curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
 					upQ.insert(iter, req);
 					break;
 				}

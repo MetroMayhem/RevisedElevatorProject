@@ -17,8 +17,8 @@ private:
 	bool dir;
 
 public:
-	Elevator();
-	Elevator(int _floors);
+	Elevator();		//
+	Elevator(int _floors);	//
 	~Elevator();
 	void Add(requests req);
 	void Gtfo();

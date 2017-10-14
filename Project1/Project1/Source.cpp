@@ -24,7 +24,7 @@ int main() {
 		cout << request;
 		
 	}
-	//elevator.findNext();
+	elevator.findNext();
 
 
 	cin.get();
