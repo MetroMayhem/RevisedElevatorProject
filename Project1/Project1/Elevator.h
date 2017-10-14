@@ -9,7 +9,7 @@ using namespace std;
 class Elevator {
 private:
 	list<int> floors;
-	list<int>::iterator curr = floors.begin();
+	list<int>::iterator curr;
 	vector<requests> upQ;
 	vector<requests> downQ;
 	vector<requests>::iterator req;
@@ -18,7 +18,7 @@ private:
 
 public:
 	Elevator();
-	Elevator(list<int> _floors);
+	Elevator(int _floors);
 	~Elevator();
 	void Add(requests req);
 	void Gtfo();

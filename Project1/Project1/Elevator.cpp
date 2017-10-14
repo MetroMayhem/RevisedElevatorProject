@@ -2,29 +2,14 @@
 
 
 
-Elevator::Elevator()
-{
-	list<int> floors;
-	list<int>::iterator curr = floors.begin();
-	vector<requests> upQ;
-	vector<requests> downQ;
-	vector<requests>::iterator req;
-	bool dir;
+Elevator::Elevator() { curr = floors.begin(); dir = 1; }
 
+Elevator::Elevator(int _floors) {
+	for (int i = 0; i < _floors; i++)
+		floors.push_back(i);
+	curr = floors.begin();
+	dir = 1;
 }
-
-Elevator::Elevator(list<int> _floors)
-{
-	list<int> floors = _floors;
-	list<int>::iterator curr = floors.begin();
-	vector<requests> upQ;
-	vector<requests> downQ;
-	vector<requests>::iterator req;
-	bool dir;
-}
-
-
-
 
 Elevator::~Elevator()
 {
@@ -36,7 +21,7 @@ void Elevator::Add(requests req) {
 	//O(n) worst case time complexity
 
 	vector<requests>::iterator iter;
-	if (dir == 1) {					//If elevator is moving in up direction
+	if (req.direction == 1 && dir == 1) {					//If elevator is moving in up direction
 		if (req.curr < *curr) {			//If the new request's current floor is less than the elevator's current floor
 			for (iter = upQ.end(); iter != upQ.begin(); iter--) {		//Iterate backwards through the up 'queue'
 				if (iter->curr > *curr)						//If the request in the queue's current floor is > the elevator's current floor
@@ -95,9 +80,11 @@ void Elevator::Gtfo()
 int Elevator::findNext()
 {
 	if (dir == 1) {
+		cout << upQ[0];
 		return upQ[0].dest;
 	}
 	else if (dir == 0) {
+		cout << downQ[0];
 		return downQ[0].dest;
 	}
 }
