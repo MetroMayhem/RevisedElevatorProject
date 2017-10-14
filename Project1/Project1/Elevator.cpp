@@ -2,12 +2,20 @@
 
 
 
-Elevator::Elevator() { curr = floors.begin(); dir = 1; }
+Elevator::Elevator() { 
+	floors.push_back(0);
+	curr = floors.begin();
+	//upQ.push_back(requests(0, 0, 1, 0));
+	//downQ.push_back(requests(0, 0, 0, 0));
+	dir = 1;
+}
 
 Elevator::Elevator(int _floors) {
 	for (int i = 0; i < _floors; i++)
 		floors.push_back(i);
 	curr = floors.begin();
+	//upQ.push_back(requests(0, 0, 1, 0));
+	//downQ.push_back(requests(0, 0, 0, 0));
 	dir = 1;
 }
 
@@ -21,8 +29,11 @@ void Elevator::Add(requests req) {
 	//O(n) worst case time complexity
 
 	vector<requests>::iterator iter;
-	if (req.direction == 1 && dir == 1) {					//If elevator is moving in up direction
-		if (req.curr < *curr) {			//If the new request's current floor is less than the elevator's current floor
+	if (req.direction == 1) {					//If the request is for the up direction
+		if (upQ.empty())						//If the 'queue' is empty
+			upQ.push_back(req);
+
+		else if (req.curr < *curr && dir == 1) {			//If the new request's current floor is less than the elevator's current floor (if elevator is moving up)
 			for (iter = upQ.end(); iter != upQ.begin(); iter--) {		//Iterate backwards through the up 'queue'
 				if (iter->curr > *curr)						//If the request in the queue's current floor is > the elevator's current floor
 					upQ.push_back(req);				//Put the new request at the end of the Queue
@@ -32,17 +43,29 @@ void Elevator::Add(requests req) {
 				}
 			}
 		}
-		else {			//If the new request's current floor is greater than the elevator's current floor
+		else {			//If the new request's current floor is greater than the elevator's current floor ************* check up until the "turning point"
 			for (iter = upQ.begin(); iter != upQ.end(); iter++) {		//Iterate forward through the queue
 				if (iter->curr > req.curr) {		//If the request in the queue's current floor is greater than the new request's current floor
 					upQ.insert(iter, req);		//Insert the new request before the iterator's request
 					break;
 				}
+				else if (++iter == upQ.end()) {		//If you've checked every part of the queue, push the new request to the back
+					upQ.push_back(req);
+					break;
+				}
+				else if (iter->curr < req.curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
+					upQ.insert(iter, req);
+					break;
+				}
+				iter--;
 			}		//The logic for adding to the down queue is relatively similar, but with different conditions
 		}			//Since it considers floors in the oposite manner as the up queue
 	}
 	else {
-		if (req.curr > *curr) {
+		if (downQ.empty())
+			downQ.push_back(req);
+
+		else if (req.curr > *curr && dir == 0) {
 			for (iter = downQ.end(); iter != downQ.begin(); iter--) {
 				if (iter->curr < *curr)
 					downQ.push_back(req);
@@ -58,6 +81,15 @@ void Elevator::Add(requests req) {
 					downQ.insert(iter, req);
 					break;
 				}
+				else if (++iter == downQ.end()) {
+					downQ.push_back(req);
+					break;
+				}
+				else if (iter->curr > req.curr) {		//LOGIC FOR IF YOU REACH THE 'NEXT UP' VALUES      NOT TESTED YET
+					upQ.insert(iter, req);
+					break;
+				}
+				iter--;
 			}
 		}
 	}

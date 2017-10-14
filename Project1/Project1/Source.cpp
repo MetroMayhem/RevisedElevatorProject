@@ -21,10 +21,10 @@ int main() {
 
 		elevator.Add(request);
 
-		//cout << request;
+		cout << request;
 		
 	}
-	elevator.findNext();
+	//elevator.findNext();
 
 
 	cin.get();
