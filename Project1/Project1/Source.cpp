@@ -11,14 +11,15 @@ int main() {
 
 	Elevator elevator = Elevator(floors);
 	
-	requests r1 = requests(2, 3, 1, 0);
+	requests r1 = requests(7, 3, 1, 0);
 	requests r2 = requests(4, 6, 1, 0);
 	requests r3 = requests(5, 6, 1, 0);
 	requests r4 = requests(4, 1, 0, 0);
 	requests r5 = requests(8, 5, 0, 0);
 	requests r6 = requests(1, 4, 1, 0);
+	requests r7 = requests(6, 4, 0, 0);
 	
-	vector<requests> vec = { r1, r2, r3, r4, r5, r6 };
+	vector<requests> vec = { r1, r2, r3, r4, r5, r6, r7 };
 
 	elevator.update(vec);
 

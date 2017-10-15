@@ -12,6 +12,9 @@ Elevator::Elevator(int _floors) {
 	for (int i = 0; i < _floors; i++)
 		floors.push_back(i);
 	curr = floors.begin();
+	curr++;
+	curr++;
+	curr++;
 	dir = 1;
 }
 
@@ -176,8 +179,21 @@ int Elevator::findNext()
 {
 	vector<requests>::iterator iter;
 
-	if (upQ[0].curr < downQ[0].curr) {
+	if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
 		next.push_back(upQ[0]);
+
+	}
+	else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {
+		if ((upQ[0].curr == downQ[0].curr) && (dir == 1)) {
+			next.push_back(upQ[0]);
+			next.push_back(downQ[0]);
+		}
+		else if (upQ[0].curr == downQ[0].curr) {
+			next.push_back(downQ[0]);
+			next.push_back(upQ[0]);
+		}
+		else if (dir == 1)
+			next.push_back(max(upQ[0].curr, downQ[0].curr));
 
 	}
 
@@ -202,6 +218,9 @@ void Elevator::update(vector<requests> reqs) {
 }
 
 void Elevator::sort(vector<requests>& v1) {
+	if (v1.empty())
+		return;
+
 	for (vector<requests>::iterator iteri = (v1.begin() + 1); iteri != v1.end(); iteri++)
 		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
 			if (abs(iterj->curr - *curr) < abs((iterj - 1)->curr - *curr))
