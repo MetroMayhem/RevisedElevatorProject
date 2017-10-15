@@ -27,5 +27,6 @@ public:
 	int findNext();
 	void move(int floor);
 	void update(vector<requests> reqs);
+	void sort(vector<requests>& v1);
 
 };
