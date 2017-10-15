@@ -207,6 +207,31 @@ int Elevator::findNext()
 	else
 		next.push_back(downQ[0]);
 
+	int a = 0;
+
+	while (true) {
+		bool exe = 0;
+
+		if ((a + 1) != upQ.size()) {
+			if (upQ[a].curr == upQ[a + 1].curr) {
+				next.push_back(upQ[a + 1]);
+				exe = 1;
+			}
+		}
+
+		if ((a + 1) != downQ.size()) {
+			if (downQ[a].curr == downQ[a + 1].curr) {
+				next.push_back(downQ[a + 1]);
+				exe = 1;
+			}
+		}
+
+		if (!exe)
+			break;
+
+		a++;
+	}
+
 	return 0;
 
 }
