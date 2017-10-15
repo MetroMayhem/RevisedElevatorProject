@@ -1,7 +1,6 @@
 #include "Elevator.h"
 
 
-
 Elevator::Elevator() { 
 	floors.push_back(0);
 	curr = floors.begin();
@@ -192,10 +191,21 @@ int Elevator::findNext()
 			next.push_back(downQ[0]);
 			next.push_back(upQ[0]);
 		}
-		else if (dir == 1)
-			next.push_back(max(upQ[0].curr, downQ[0].curr));
-
+		else if (dir == 1) {
+			if (upQ[0].curr > downQ[0].curr)
+				next.push_back(upQ[0]);
+			else
+				next.push_back(downQ[0]);
+		}
+		else {
+			if (upQ[0].curr < downQ[0].curr)
+				next.push_back(upQ[0]);
+			else
+				next.push_back(downQ[0]);
+		}
 	}
+	else
+		next.push_back(downQ[0]);
 
 	return 0;
 
