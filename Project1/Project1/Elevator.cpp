@@ -38,6 +38,54 @@ void Elevator::Add(requests req) {
 
 	vector<requests>::iterator iter;
 	if (req.direction == 1) {					//If the request is for the up direction
+		if (upQ.empty())						//If Queue is empty push in request
+			upQ.push_back(req);
+		else {
+			for (iter = upQ.begin(); iter != upQ.end(); iter++) {				//Iterate through the up 'queue'
+				if ( abs(iter->curr - *curr) > abs(req.curr - *curr) ) {		//If the difference between the iter request and the elevator is > than the new request and the elevator
+					upQ.insert(iter, req);										//Put the new request before the iter request
+					break;
+				}
+				else if (abs(iter->curr - *curr) == abs(req.curr - *curr)) {	//If the two requests are the same distance away from the elevator
+					if (req.curr > *curr) {										//If the new request is above the elevator insert the new request before the iter request
+						upQ.insert(iter, req);									//Otherwise gets put behind iter request
+						break;
+					}
+				}
+				else if (++iter == upQ.end()) {					//If the current iter is the last request in the queue, push the new request to the back
+					upQ.push_back(req);
+					break;
+				}
+				iter--;
+			}
+		}			//The logic for up and down requests are relatively the same, but with slightly different conditions for if the
+	}				//distance between the requests and elevator is the same
+	else {
+		if (downQ.empty())
+			downQ.push_back(req);
+		else {
+			for (iter = downQ.begin(); iter != downQ.end(); iter++) {
+				if (abs(iter->curr - *curr) > abs(req.curr - *curr)) {
+					downQ.insert(iter, req);
+					break;
+				}
+				else if (abs(iter->curr - *curr) == abs(req.curr - *curr)) {
+					if (req.curr < *curr) {
+						downQ.insert(iter, req);
+						break;
+					}
+				}
+				else if (++iter == downQ.end()) {
+					downQ.push_back(req);
+					break;
+				}
+				iter--;
+			}
+		}
+	}
+
+	//OLD ADD FUNCTION. MAY REVERT BACK LATER
+	/*if (req.direction == 1) {					//If the request is for the up direction
 		if (upQ.empty())						//If the 'queue' is empty
 			upQ.push_back(req);
 
@@ -101,11 +149,10 @@ void Elevator::Add(requests req) {
 			}
 		}
 	}
-	
+*/	
 }
 
-void Elevator::Gtfo()
-{
+void Elevator::Gtfo() {
 	if (dir == 1) {
 		if (upQ[0].dest == *curr)
 			upQ.erase(upQ.begin());
