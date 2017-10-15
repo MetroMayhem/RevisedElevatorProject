@@ -1,6 +1,7 @@
 #include "Elevator.h"
 #include <iostream>
 #include <stdlib.h>
+#include <ctime>
 
 using namespace std;
 
