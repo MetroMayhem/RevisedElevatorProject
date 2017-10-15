@@ -35,8 +35,16 @@ void Elevator::Add(requests req) {
 	//Function takes into consideration where in the queue the request needs to be based on where the elevator is
 	//as well as where the request is coming from
 	//O(n) worst case time complexity
+	if (req.direction)
+		upQ.push_back(req);
+	else
+		downQ.push_back(req);
+}
 
-	vector<requests>::iterator iter;
+
+
+
+	/*vector<requests>::iterator iter;
 	if (req.direction == 1) {					//If the request is for the up direction
 		if (upQ.empty())						//If Queue is empty push in request
 			upQ.push_back(req);
@@ -85,7 +93,7 @@ void Elevator::Add(requests req) {
 	}
 
 	//OLD ADD FUNCTION. MAY REVERT BACK LATER
-	/*if (req.direction == 1) {					//If the request is for the up direction
+	if (req.direction == 1) {					//If the request is for the up direction
 		if (upQ.empty())						//If the 'queue' is empty
 			upQ.push_back(req);
 
@@ -150,7 +158,7 @@ void Elevator::Add(requests req) {
 		}
 	}
 */
-}
+
 
 void Elevator::Gtfo() {
 	if (dir == 1) {
