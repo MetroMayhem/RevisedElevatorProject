@@ -204,6 +204,6 @@ void Elevator::update(vector<requests> reqs) {
 void Elevator::sort(vector<requests>& v1) {
 	for (vector<requests>::iterator iteri = (v1.begin() + 1); iteri != v1.end(); iteri++)
 		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
-			if (abs(iterj->curr - *curr) < abs((iterj - 1)->curr - *curr))
+			if (abs(iteri->curr - *curr) < abs((iterj - 1)->curr - *curr))
 				swap(iterj, (iterj - 1));
 }
