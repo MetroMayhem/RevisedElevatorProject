@@ -180,3 +180,7 @@ void Elevator::move(int floor)
 {
 
 }
+
+void Elevator::update(vector<requests> reqs) {
+
+}
