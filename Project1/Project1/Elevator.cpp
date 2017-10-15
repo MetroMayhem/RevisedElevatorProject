@@ -149,7 +149,7 @@ void Elevator::Add(requests req) {
 			}
 		}
 	}
-*/	
+*/
 }
 
 void Elevator::Gtfo() {
@@ -168,12 +168,11 @@ int Elevator::findNext()
 {
 	vector<requests>::iterator iter;
 
-/*	if (upQ[0] < downQ[0]) {
+	if (upQ[0].curr < downQ[0].curr) {
 		next.push_back(upQ[0]);
 
 	}
-	*/
-	return 0;
+
 }
 
 void Elevator::move(int floor)
@@ -182,14 +181,12 @@ void Elevator::move(int floor)
 }
 
 void Elevator::update(vector<requests> reqs) {
-	/*if (reqs.empty()) {
-		sort(upQ);
-		sort(downQ);
-		sort(next);
-	}
-	else 
-		for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) {
-			Add(*itr);
-		}
-		*/
+
+}
+
+void Elevator::sort(vector<requests>& v1) {
+	for (vector<requests>::iterator iteri = (v1.begin() + 1); iteri != v1.end(); iteri++)
+		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
+			if (abs(iterj->curr - *curr) < abs((iterj - 1)->curr - *curr))
+				swap(iterj, (iterj - 1));
 }
