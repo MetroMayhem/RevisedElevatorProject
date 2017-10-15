@@ -16,12 +16,15 @@ int main() {
 	requests r3 = requests(5, 6, 1, 0);
 	requests r4 = requests(4, 1, 0, 0);
 	requests r5 = requests(8, 5, 0, 0);
+	requests r6 = requests(1, 4, 1, 0);
 	
 	elevator.Add(r1);
 	elevator.Add(r2);
 	elevator.Add(r3);
 	elevator.Add(r4);
 	elevator.Add(r5);
+	elevator.Add(r6);
+
 
 	elevator.getUpQ();
 	elevator.getDownQ();

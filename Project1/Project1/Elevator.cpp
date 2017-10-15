@@ -166,14 +166,13 @@ void Elevator::Gtfo() {
 
 int Elevator::findNext()
 {
-	if (dir == 1) {
-		cout << upQ[0];
-		return upQ[0].dest;
+	vector<requests>::iterator iter;
+
+	if (upQ[0] < downQ[0]) {
+		next.push_back(upQ[0]);
+
 	}
-	else if (dir == 0) {
-		cout << downQ[0];
-		return downQ[0].dest;
-	}
+	
 }
 
 void Elevator::move(int floor)

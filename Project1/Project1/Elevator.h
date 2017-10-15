@@ -12,7 +12,7 @@ private:
 	list<int>::iterator curr;
 	vector<requests> upQ;
 	vector<requests> downQ;
-	vector<requests>::iterator req;
+	vector<requests> next;
 
 	bool dir;
 
