@@ -181,6 +181,8 @@ int Elevator::findNext()
 
 	}
 
+	return 0;
+
 }
 
 void Elevator::move(int floor)
@@ -189,15 +191,14 @@ void Elevator::move(int floor)
 }
 
 void Elevator::update(vector<requests> reqs) {
-	if (reqs.empty()) {
-		sort(upQ);
-		sort(downQ);
-		sort(next);
-	}
-	else
-		for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) {
+	
+	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
 			Add(*itr);
-		}
+		
+	sort(upQ);
+	sort(downQ);
+	sort(next);
+
 }
 
 void Elevator::sort(vector<requests>& v1) {

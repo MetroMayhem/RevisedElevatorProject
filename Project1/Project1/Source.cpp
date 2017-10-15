@@ -1,7 +1,6 @@
 #include "Elevator.h"
 #include <iostream>
 #include <stdlib.h>
-#include <ctime>
 
 using namespace std;
 
@@ -19,12 +18,18 @@ int main() {
 	requests r5 = requests(8, 5, 0, 0);
 	requests r6 = requests(1, 4, 1, 0);
 	
+	vector<requests> vec = { r1, r2, r3, r4, r5, r6 };
+
+	elevator.update(vec);
+
+	/*
 	elevator.Add(r1);
 	elevator.Add(r2);
 	elevator.Add(r3);
 	elevator.Add(r4);
 	elevator.Add(r5);
 	elevator.Add(r6);
+	*/
 
 
 	elevator.getUpQ();
