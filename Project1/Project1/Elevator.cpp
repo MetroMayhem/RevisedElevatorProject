@@ -95,8 +95,16 @@ int Elevator::findNext() {
 
 void Elevator::move(int floor, vector<requests> newR){
 
-	if (floor != -1)
+	if (floor != -1) {
+		for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++) {
+			itr->waitTime += abs((floor - *curr)) * 5;
+		}
+		for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++) {
+			itr->waitTime += abs((floor - *curr)) * 5;
+		}
 		curr += (floor - *curr);
+		 
+	}
 	
 	while (!onBoard.empty() && onBoard[0].dest == *curr) {
 		onBoard.erase(onBoard.begin());
@@ -104,13 +112,17 @@ void Elevator::move(int floor, vector<requests> newR){
 
 	while (!upQ.empty() && upQ[0].curr == *curr) {
 		onBoard.push_back(upQ[0]);
+		cout << upQ[0].curr << " to " << upQ[0].dest << " waited " << upQ[0].waitTime << " seconds before getting on the elevator\n\n";
 		upQ.erase(upQ.begin());
 	}
 
 	while (!downQ.empty() && downQ[0].curr == *curr) {
 		onBoard.push_back(downQ[0]);
+		cout << downQ[0].curr << " to " << downQ[0].dest << " waited " << downQ[0].waitTime << " seconds before getting on the elevator\n\n";
 		downQ.erase(downQ.begin());
 	}
+
+	
 
 	update(newR);
 
@@ -124,6 +136,8 @@ void Elevator::update(vector<requests> reqs) {
 	
 	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
 			Add(*itr);
+
+	
 		
 	sortR(upQ);
 	sortR(downQ);
@@ -151,7 +165,7 @@ void Elevator::sortOB(vector<requests>& v1) {		//Selection sort for onBoard queu
 }
 
 void Elevator::simulation(int times) {
-	srand(time(NULL));
+	srand( (unsigned int) time(NULL));
 	vector<requests> sim;
 	requests temp;
 	for (int i = 0; i < times; i++) {
