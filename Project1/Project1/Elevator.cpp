@@ -1,30 +1,33 @@
 #include "Elevator.h"
 
 
-Elevator::Elevator() { 
+Elevator::Elevator() {
+	//Default constructor
 	floors.push_back(0);
 	curr = floors.begin();
 	dir = 1;
 }
 
 Elevator::Elevator(int _floors) {
+	//Constructor to create 'building' that elevator moves through
 	for (int i = 0; i < _floors; i++)
 		floors.push_back(i);
 	curr = floors.begin();
 	dir = 1;
 }
 
-void Elevator::getUpQ()
-{
-	for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
-		cout << *itr;
-}
-
-void Elevator::getDownQ()
-{
-	for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
-		cout << *itr;
-}
+//Getters for request queues
+//void Elevator::getUpQ() {
+//	
+//	for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
+//		cout << *itr;
+//}
+//
+//void Elevator::getDownQ()
+//{
+//	for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
+//		cout << *itr;
+//}
 
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
@@ -94,21 +97,26 @@ int Elevator::findNext() {
 }
 
 void Elevator::move(int floor, vector<requests> newR){
+	//Function takes in a floor number and moves the elevator to that floor
+	//When the elevator moves, each request gets seconds added on to its wait length (ASSUMPTION: Wait time based on elevator traveling 1 floor per 5 seconds)
+	//After the elevator moves, each queue is checked to see what requests get on/off and removes them from their respected queues
+	//Finally the system is updated (see update function)
+	//Time Complexity: Best Case O(1) Average Case O(n) Worst Case O(n^2)
+			//Best Case: If all queues are empty or if you do not move floors, then nothing needs to be checked or re sorted
+			//Average Case: Usually, the queues will
 
-	if (floor != -1) {
-		for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++) {
+	if (floor != -1) {			//
+		for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
 			itr->waitTime += abs((floor - *curr)) * 5;
-		}
-		for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++) {
+		for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
 			itr->waitTime += abs((floor - *curr)) * 5;
-		}
+
 		curr += (floor - *curr);
 		 
 	}
 	
-	while (!onBoard.empty() && onBoard[0].dest == *curr) {
+	while (!onBoard.empty() && onBoard[0].dest == *curr)
 		onBoard.erase(onBoard.begin());
-	}
 
 	while (!upQ.empty() && upQ[0].curr == *curr) {
 		onBoard.push_back(upQ[0]);
@@ -122,14 +130,9 @@ void Elevator::move(int floor, vector<requests> newR){
 		downQ.erase(downQ.begin());
 	}
 
-	
-
 	update(newR);
 
 	return;
-
-
-
 }
 
 void Elevator::update(vector<requests> reqs) {
