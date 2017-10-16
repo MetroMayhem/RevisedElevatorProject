@@ -87,19 +87,6 @@ int Elevator::findNext() {
 				return req.curr;
 			else
 				return onBoard[0].dest;			//If request and destination are not the same floor, person onBoard takes precedence
-			/*else if (dir == 1) {
-				if (req.curr > onBoard[0].dest)
-					return req.curr;
-				else
-					return onBoard[0].dest;
-			}
-			else {
-				if (req.curr < onBoard[0].dest)
-					return req.curr;
-				else
-					return onBoard[0].dest;
-			}
-			*/
 		}
 		else
 			return onBoard[0].dest;
@@ -185,7 +172,9 @@ void Elevator::simulation(int times) {
 		else
 			move(findNext(), sim);
 	}
-	
-		//(rand() % floors.size()) + 1;
-	//}
+	sim.clear();
+
+	while ((!upQ.empty() || !downQ.empty()) || !onBoard.empty()) {
+		move(findNext(), sim);
+	}
 }

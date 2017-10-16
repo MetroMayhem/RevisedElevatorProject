@@ -30,7 +30,7 @@ int main() {
 	//vec = { r8, r9 };
 	//elevator.move(elevator.findNext(), vec);
 	
-	elevator.simulation(4);
+	elevator.simulation(3);
 
 	cin.get();
 
