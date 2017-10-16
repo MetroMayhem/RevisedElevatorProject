@@ -24,12 +24,13 @@ int main() {
 	
 	vector<requests> vec = { r1, r2, r3, r4, r5, r6, r7 };
 
-	elevator.move(0, vec);
-	vec.clear();
-	elevator.move(elevator.findNext(), vec);
-	vec = { r8, r9 };
-	elevator.move(elevator.findNext(), vec);
-
+	//elevator.move(0, vec);
+	//vec.clear();
+	//elevator.move(elevator.findNext(), vec);
+	//vec = { r8, r9 };
+	//elevator.move(elevator.findNext(), vec);
+	
+	elevator.simulation(4);
 
 	cin.get();
 

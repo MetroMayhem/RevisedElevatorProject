@@ -165,3 +165,30 @@ void Elevator::sortOB(vector<requests>& v1) {		//Selection sort for onBoard queu
 			if (abs(iterj->dest - *curr) < abs((iterj - 1)->dest - *curr))
 				iter_swap(iterj, (iterj - 1));
 }
+
+void Elevator::simulation(int times) {
+	srand(time(NULL));
+	vector<requests> sim;
+	requests temp;
+	for (int i = 0; i < times; i++) {
+		sim.clear();
+		for (int j = 0; j < (rand() % 4); j++) {
+			do {
+				temp.curr = (rand() % floors.size());
+				temp.dest = (rand() % floors.size());
+			} while (temp.curr == temp.dest);
+			if (temp.curr < temp.dest)
+				temp.direction = 1;
+			else
+				temp.direction = 0;
+			sim.push_back(temp);
+		}
+		if (i == 0)
+			move(0, sim);
+		else
+			move(findNext(), sim);
+	}
+	
+		//(rand() % floors.size()) + 1;
+	//}
+}

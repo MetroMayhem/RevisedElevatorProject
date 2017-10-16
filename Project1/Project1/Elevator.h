@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include "requests.h"
+#include <ctime>
 
 using namespace std;
 
@@ -13,8 +14,9 @@ private:
 	vector<requests> upQ;
 	vector<requests> downQ;
 	vector<requests> onBoard;
-
 	bool dir;
+
+
 
 public:
 	Elevator();
@@ -28,4 +30,5 @@ public:
 	void sortR(vector<requests>& v1);
 	void sortOB(vector<requests>& v1);
 
+	void simulation(int times);
 };
