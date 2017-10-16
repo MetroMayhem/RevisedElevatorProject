@@ -101,7 +101,6 @@ void Elevator::move(int floor, vector<requests> newR){
 			itr->waitTime += abs((floor - *curr)) * 5;
 
 		curr += (floor - *curr);
-		 
 	}
 	
 	//Let on/off requests
