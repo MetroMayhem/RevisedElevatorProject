@@ -16,19 +16,6 @@ Elevator::Elevator(int _floors) {
 	dir = 1;
 }
 
-//Getters for request queues
-//void Elevator::getUpQ() {
-//	
-//	for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
-//		cout << *itr;
-//}
-//
-//void Elevator::getDownQ()
-//{
-//	for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
-//		cout << *itr;
-//}
-
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
 	//O(1) time complexity
@@ -100,12 +87,14 @@ void Elevator::move(int floor, vector<requests> newR){
 	//Function takes in a floor number and moves the elevator to that floor
 	//When the elevator moves, each request gets seconds added on to its wait length (ASSUMPTION: Wait time based on elevator traveling 1 floor per 5 seconds)
 	//After the elevator moves, each queue is checked to see what requests get on/off and removes them from their respected queues
-	//Finally the system is updated (see update function)
-	//Time Complexity: Best Case O(1) Average Case O(n) Worst Case O(n^2)
+	//Finally the system is updated with new requests that were added (see update function)
+	//Time Complexity: Best Case O(1) Average Case O(n) Worst Case O(n^2)		Relies heavily on the sort function
 			//Best Case: If all queues are empty or if you do not move floors, then nothing needs to be checked or re sorted
-			//Average Case: Usually, the queues will
+			//Average Case: Usually, the queues will be iterated through once to update wait time, and only a few requests will get on/off the elevator
+					//and the sorting functions should usually be O(n) for 'almost sorted' cases
+			//Worst Case: if for some reason the queues are reversed and need to be sorted, the insertion sort algorithm's worst case is O(n^2)
 
-	if (floor != -1) {			//
+	if (floor != -1) {			//as long as you have a next floor, update times and move the floor
 		for (vector<requests>::iterator itr = upQ.begin(); itr != upQ.end(); itr++)
 			itr->waitTime += abs((floor - *curr)) * 5;
 		for (vector<requests>::iterator itr = downQ.begin(); itr != downQ.end(); itr++)
@@ -115,6 +104,7 @@ void Elevator::move(int floor, vector<requests> newR){
 		 
 	}
 	
+	//Let on/off requests
 	while (!onBoard.empty() && onBoard[0].dest == *curr)
 		onBoard.erase(onBoard.begin());
 
@@ -129,26 +119,31 @@ void Elevator::move(int floor, vector<requests> newR){
 		cout << downQ[0].curr << " to " << downQ[0].dest << " waited " << downQ[0].waitTime << " seconds before getting on the elevator\n\n";
 		downQ.erase(downQ.begin());
 	}
-
+	
+	//Update queues with new requests
 	update(newR);
 
 	return;
 }
 
 void Elevator::update(vector<requests> reqs) {
-	
-	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
+	//Updates queues
+	//Time complexity: Average case: O(n)  Worst case: O(n^2)    (Sort function)
+
+	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++)		//Add new requests
 			Add(*itr);
 
-	
-		
 	sortR(upQ);
 	sortR(downQ);
 	sortOB(onBoard);
 
 }
 
-void Elevator::sortR(vector<requests>& v1) {	//Selection sort for request queues
+void Elevator::sortR(vector<requests>& v1) {	
+	//Selection sort for request queues
+	//Best case: O(n)   (sorted queue)
+	//Worst case: O(n^2) (reversed queue)
+
 	if (v1.empty())
 		return;
 
@@ -157,7 +152,11 @@ void Elevator::sortR(vector<requests>& v1) {	//Selection sort for request queues
 			if (abs(iterj->curr - *curr) < abs((iterj - 1)->curr - *curr))
 				iter_swap(iterj, (iterj - 1));
 }
-void Elevator::sortOB(vector<requests>& v1) {		//Selection sort for onBoard queue
+void Elevator::sortOB(vector<requests>& v1) {		
+	//Selection sort for onBoard queue
+	//Best case: O(n)   (sorted queue)
+	//Worst case: O(n^2) (reversed queue)
+
 	if (v1.empty())
 		return;
 
