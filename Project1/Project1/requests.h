@@ -7,7 +7,7 @@ struct requests {
 
 	requests() : curr(0), dest(0), direction(0) {}
 
-	requests(int _curr, int _dest, bool _direction, bool _pickedUp) :
+	requests(int _curr, int _dest, bool _direction) :
 		curr(_curr), dest(_dest), direction(_direction) {}
 
 	 friend std::ostream& operator<<(std::ostream& cout, requests _req) {

@@ -181,7 +181,7 @@ int Elevator::findNext() {
 		return (onBoard[0].dest);
 	else if (upQ.empty())						//If upQ is empty make the temp request the next down request
 		req = downQ[0];
-	else
+	else if (downQ.empty())
 		req = upQ[0];					//If downQ is empty make temp request the next up request
 
 
@@ -247,16 +247,16 @@ void Elevator::move(int floor, vector<requests> newR){
 	curr += (floor - *curr);
 
 
-	while (onBoard[0].dest == *curr) {
+	while (!onBoard.empty() && onBoard[0].dest == *curr) {
 		onBoard.erase(onBoard.begin());
 	}
 
-	while (upQ[0].curr == *curr) {
+	while (!upQ.empty() && upQ[0].curr == *curr) {
 		onBoard.push_back(upQ[0]);
 		upQ.erase(upQ.begin());
 	}
 
-	while (downQ[0].curr == *curr) {
+	while (!downQ.empty() && downQ[0].curr == *curr) {
 		onBoard.push_back(downQ[0]);
 		downQ.erase(downQ.begin());
 	}
