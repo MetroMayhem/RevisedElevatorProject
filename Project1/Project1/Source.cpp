@@ -33,8 +33,8 @@ int main() {
 	*/
 
 
-	elevator.getUpQ();
-	elevator.getDownQ();
+	//elevator.getUpQ();
+	//elevator.getDownQ();
 
 	/*for (int i = 0; i < 10; i++) {
 		int curr = rand() % floors + 1;
@@ -50,8 +50,12 @@ int main() {
 		cout << request;
 		
 	}
-	elevator.findNext();
 	*/
+	for (int i = 0; i < 10; i++) {
+		cout << elevator.findNext();
+	}
+	
+	
 
 	cin.get();
 }

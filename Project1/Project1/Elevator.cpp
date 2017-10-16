@@ -11,9 +11,6 @@ Elevator::Elevator(int _floors) {
 	for (int i = 0; i < _floors; i++)
 		floors.push_back(i);
 	curr = floors.begin();
-	curr++;
-	curr++;
-	curr++;
 	dir = 1;
 }
 
@@ -176,9 +173,8 @@ void Elevator::Gtfo() {
 
 int Elevator::findNext()
 {
-	vector<requests>::iterator iter;
 
-	if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
+	/*if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
 		next.push_back(upQ[0]);
 
 	}
@@ -231,13 +227,36 @@ int Elevator::findNext()
 
 		a++;
 	}
+	*/
 
-	return 0;
+	if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
+		return(upQ[0].curr);
 
+	}
+	else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {
+		if ((upQ[0].curr == downQ[0].curr) && (dir == 1))
+			return(upQ[0].curr);
+		else if (upQ[0].curr == downQ[0].curr)
+			return(downQ[0].curr);
+		else if (dir == 1) {
+			if (upQ[0].curr > downQ[0].curr)
+				return(upQ[0].curr);
+			else
+				return(downQ[0].curr);
+		}
+		else {
+			if (upQ[0].curr < downQ[0].curr)
+				return(upQ[0].curr);
+			else
+				return(downQ[0].curr);
+		}
+	}
+	else
+		return(downQ[0].curr);
 }
 
-void Elevator::move(int floor)
-{
+void Elevator::move(int floor){
+
 
 }
 
