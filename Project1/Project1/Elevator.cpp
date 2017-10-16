@@ -241,7 +241,28 @@ int Elevator::findNext() {
 }
 
 void Elevator::move(int floor){
+
+	if (floor == -1)
+		return;
+
 	curr += (floor - *curr);
+
+
+	while (onBoard[0].dest == *curr) {
+		onBoard.erase(onBoard.begin());
+	}
+
+	while (upQ[0].curr == *curr) {
+		onBoard.push_back(upQ[0]);
+		upQ.erase(upQ.begin());
+	}
+
+	while (downQ[0].curr == *curr) {
+		onBoard.push_back(downQ[0]);
+		downQ.erase(downQ.begin());
+	}
+
+
 
 }
 
