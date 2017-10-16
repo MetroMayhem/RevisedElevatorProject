@@ -8,11 +8,11 @@ using namespace std;
 
 class Elevator {
 private:
-	list<int> floors;
-	list<int>::iterator curr;
+	vector<int> floors;
+	vector<int>::iterator curr;
 	vector<requests> upQ;
 	vector<requests> downQ;
-	vector<requests> next;
+	vector<requests> onBoard;
 
 	bool dir;
 

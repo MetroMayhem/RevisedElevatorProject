@@ -1,4 +1,5 @@
 #include "Elevator.h"
+#include <algorithm>
 
 
 Elevator::Elevator() { 
@@ -228,35 +229,72 @@ int Elevator::findNext()
 		a++;
 	}
 	*/
+	requests req(0,0,0,0);
+	if (upQ.empty() && downQ.empty() && onBoard.empty())
+		return -1;
+	else if (upQ.empty() && downQ.empty())
+		return (onBoard[0].dest);
+	else if (upQ.empty())
+		req = downQ[0];
+	else
+		req = upQ[0];
+
+
 
 	if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
-		return(upQ[0].curr);
+		req = upQ[0];
 
 	}
 	else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {
 		if ((upQ[0].curr == downQ[0].curr) && (dir == 1))
-			return(upQ[0].curr);
+			req = upQ[0];
 		else if (upQ[0].curr == downQ[0].curr)
-			return(downQ[0].curr);
+			req = downQ[0];
 		else if (dir == 1) {
 			if (upQ[0].curr > downQ[0].curr)
-				return(upQ[0].curr);
+				req = upQ[0];
 			else
-				return(downQ[0].curr);
+				req = downQ[0];
 		}
 		else {
 			if (upQ[0].curr < downQ[0].curr)
-				return(upQ[0].curr);
+				req = upQ[0];
 			else
-				return(downQ[0].curr);
+				req = downQ[0];
 		}
 	}
 	else
-		return(downQ[0].curr);
+		req = downQ[0];
+
+	if (onBoard.empty())
+		return req.curr;
+	else {
+		if (abs(req.curr - *curr) < abs(onBoard[0].dest - *curr))
+			return req.curr;
+
+		else if (abs(req.curr - *curr) == abs(onBoard[0].dest - *curr)) {
+			if (req.curr == onBoard[0].dest)
+				return req.curr;
+			else if (dir == 1) {
+				if (req.curr > onBoard[0].dest)
+					return req.curr;
+				else
+					return onBoard[0].dest;
+			}
+			else {
+				if (req.curr < onBoard[0].dest)
+					return req.curr;
+				else
+					return onBoard[0].dest;
+			}
+		}
+		else
+			return onBoard[0].dest;
+	}
 }
 
 void Elevator::move(int floor){
-
+	curr += (floor - *curr);
 
 }
 
@@ -267,7 +305,7 @@ void Elevator::update(vector<requests> reqs) {
 		
 	sort(upQ);
 	sort(downQ);
-	sort(next);
+	sort(onBoard);
 
 }
 
