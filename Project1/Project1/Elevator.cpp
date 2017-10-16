@@ -22,6 +22,11 @@ Elevator::Elevator(int _floors, int _numOfElevators)
 
 }
 
+int Elevator::getSize()
+{
+	return floors.size();
+}
+
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
 	//O(1) time complexity
@@ -172,31 +177,3 @@ void Elevator::sortOB(vector<requests>& v1) {
 				iter_swap(iterj, (iterj - 1));
 }
 
-void Elevator::simulation(int times) {
-	srand( (unsigned int) time(NULL));
-	vector<requests> sim;
-	requests temp;
-	for (int i = 0; i < times; i++) {
-		sim.clear();
-		for (int j = 0; j < (rand() % 4); j++) {
-			do {
-				temp.curr = (rand() % floors.size());
-				temp.dest = (rand() % floors.size());
-			} while (temp.curr == temp.dest);
-			if (temp.curr < temp.dest)
-				temp.direction = 1;
-			else
-				temp.direction = 0;
-			sim.push_back(temp);
-		}
-		if (i == 0)
-			move(0, sim);
-		else
-			move(findNext(), sim);
-	}
-	sim.clear();
-
-	while ((!upQ.empty() || !downQ.empty()) || !onBoard.empty()) {
-		move(findNext(), sim);
-	}
-}
