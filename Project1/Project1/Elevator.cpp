@@ -108,12 +108,9 @@ int Elevator::findNext() {
 
 void Elevator::move(int floor, vector<requests> newR){
 
-	if (floor == -1)
-		return;
-
-	curr += (floor - *curr);
-
-
+	if (floor != -1)
+		curr += (floor - *curr);
+	
 	while (!onBoard.empty() && onBoard[0].dest == *curr) {
 		onBoard.erase(onBoard.begin());
 	}
