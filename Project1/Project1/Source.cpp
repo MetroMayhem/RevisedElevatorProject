@@ -11,6 +11,8 @@ int main() {
 
 	Elevator elevator = Elevator(floors);
 	
+	int test;
+
 	/*requests r1 = requests(7, 3, 0);
 	requests r2 = requests(4, 6, 1);
 	requests r3 = requests(5, 6, 1);

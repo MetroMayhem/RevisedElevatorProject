@@ -21,6 +21,7 @@ private:
 public:
 	Elevator();
 	Elevator(int _floors);
+	Elevator(int _floors, int _numOfElevators);
 	void Add(requests req);
 	int findNext();
 	void move(int floor, vector<requests> newR);

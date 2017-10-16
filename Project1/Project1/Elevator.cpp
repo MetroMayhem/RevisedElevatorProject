@@ -16,6 +16,12 @@ Elevator::Elevator(int _floors) {
 	dir = 1;
 }
 
+Elevator::Elevator(int _floors, int _numOfElevators)
+{
+	vector<Elevator> elevators;
+
+}
+
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
 	//O(1) time complexity
@@ -140,7 +146,7 @@ void Elevator::update(vector<requests> reqs) {
 }
 
 void Elevator::sortR(vector<requests>& v1) {	
-	//Selection sort for request queues
+	//Insertion sort for request queues
 	//Best case: O(n)   (sorted queue)
 	//Worst case: O(n^2) (reversed queue)
 
@@ -153,7 +159,7 @@ void Elevator::sortR(vector<requests>& v1) {
 				iter_swap(iterj, (iterj - 1));
 }
 void Elevator::sortOB(vector<requests>& v1) {		
-	//Selection sort for onBoard queue
+	//Insertion sort for onBoard queue
 	//Best case: O(n)   (sorted queue)
 	//Worst case: O(n^2) (reversed queue)
 
