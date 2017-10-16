@@ -23,9 +23,9 @@ public:
 	void getUpQ();
 	void getDownQ();
 	void Add(requests req);
-	void Gtfo();
+	//void Gtfo();
 	int findNext();
-	void move(int floor);
+	void move(int floor, vector<requests> newR);
 	void update(vector<requests> reqs);
 	void sortR(vector<requests>& v1);
 	void sortOB(vector<requests>& v1);
