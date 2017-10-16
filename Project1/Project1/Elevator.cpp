@@ -174,7 +174,7 @@ int Elevator::findNext() {
 	//Finds the next floor that is closest to the elevator with people on board taking slight precedence to new requests
 	//O(1) time complexity
 
-	requests req(0,0,0,0);			//Temporary request
+	requests req;			//Temporary request
 
 	if (upQ.empty() && downQ.empty() && onBoard.empty())	//If all queues are empty return -1 (don't move)
 		return -1;
@@ -250,18 +250,27 @@ void Elevator::update(vector<requests> reqs) {
 	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
 			Add(*itr);
 		
-	sort(upQ);
-	sort(downQ);
-	sort(onBoard);
+	sortR(upQ);
+	sortR(downQ);
+	sortOB(onBoard);
 
 }
 
-void Elevator::sort(vector<requests>& v1) {
+void Elevator::sortR(vector<requests>& v1) {	//Selection sort for request queues
 	if (v1.empty())
 		return;
 
 	for (vector<requests>::iterator iteri = (v1.begin() + 1); iteri != v1.end(); iteri++)
 		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
 			if (abs(iterj->curr - *curr) < abs((iterj - 1)->curr - *curr))
+				iter_swap(iterj, (iterj - 1));
+}
+void Elevator::sortOB(vector<requests>& v1) {		//Selection sort for onBoard queue
+	if (v1.empty())
+		return;
+
+	for (vector<requests>::iterator iteri = (v1.begin() + 1); iteri != v1.end(); iteri++)
+		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
+			if (abs(iterj->dest - *curr) < abs((iterj - 1)->dest - *curr))
 				iter_swap(iterj, (iterj - 1));
 }
