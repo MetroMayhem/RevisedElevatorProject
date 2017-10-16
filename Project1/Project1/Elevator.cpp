@@ -156,8 +156,7 @@ void Elevator::Add(requests req) {
 	}
 */
 
-
-void Elevator::Gtfo() {
+/*void Elevator::Gtfo() {
 	if (dir == 1) {
 		if (upQ[0].dest == *curr)
 			upQ.erase(upQ.begin());
@@ -168,7 +167,7 @@ void Elevator::Gtfo() {
 	}
 
 }
-
+*/
 int Elevator::findNext() {
 	//Function takes into consideration the distance between requests and destinations of people on and off the elevator
 	//Finds the next floor that is closest to the elevator with people on board taking slight precedence to new requests
@@ -240,7 +239,7 @@ int Elevator::findNext() {
 	}
 }
 
-void Elevator::move(int floor){
+void Elevator::move(int floor, vector<requests> newR){
 
 	if (floor == -1)
 		return;
@@ -262,15 +261,23 @@ void Elevator::move(int floor){
 		downQ.erase(downQ.begin());
 	}
 
+	update(newR);
+
+	return;
+
+
+
 }
 
 void Elevator::update(vector<requests> reqs) {
+	
 	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
 			Add(*itr);
 		
 	sortR(upQ);
 	sortR(downQ);
 	sortOB(onBoard);
+
 }
 
 void Elevator::sortR(vector<requests>& v1) {	//Selection sort for request queues
