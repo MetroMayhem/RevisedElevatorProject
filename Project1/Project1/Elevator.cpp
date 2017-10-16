@@ -26,6 +26,7 @@ void Elevator::getDownQ()
 		cout << *itr;
 }
 
+
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
 	//O(1) time complexity

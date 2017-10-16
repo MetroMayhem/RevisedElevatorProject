@@ -19,8 +19,13 @@ private:
 
 
 public:
+
+	//Default constructor
 	Elevator();
+
+	//Constructor that creates an elevator with 'n' floors
 	Elevator(int _floors);
+
 	void getUpQ();
 	void getDownQ();
 	void Add(requests req);
