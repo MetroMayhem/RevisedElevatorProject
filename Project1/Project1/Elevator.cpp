@@ -136,6 +136,7 @@ void Elevator::move(int floor, vector<requests> newR){
 	return;
 }
 
+
 void Elevator::update(vector<requests> reqs) {
 	
 	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
