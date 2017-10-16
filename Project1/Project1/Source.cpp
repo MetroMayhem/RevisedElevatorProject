@@ -81,19 +81,33 @@ int optimalQ(requests req, vector<Elevator> Elevators) {
 	case 1:
 		return 0;
 	case 2:
-		if (abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
+		if (Elevators[0].findNext() == -1)
 			return 0;
-		else
+		else if (Elevators[1].findNext() == -1)
 			return 1;
+		else {
+			if (abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
+				return 0;
+			else
+				return 1;
+		}
 	case 3:
-		if ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
-			&& ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+		if (Elevators[0].findNext() == -1)
 			return 0;
-		else if ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[0].findNext()))
-			&& ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+		else if (Elevators[1].findNext() == -1)
 			return 1;
-		else
+		else if (Elevators[2].findNext() == -1)
 			return 2;
+		else {
+			if ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
+				&& ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+				return 0;
+			else if ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[0].findNext()))
+				&& ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+				return 1;
+			else
+				return 2;
+		}
 	}
 
 }

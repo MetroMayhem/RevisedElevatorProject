@@ -43,7 +43,7 @@ int Elevator::findNext() {
 
 	requests req;			//Temporary request
 
-	if (upQ.empty() && downQ.empty() && onBoard.empty())	//If all queues are empty return -1 (don't move)
+	if (isEmpty())	//If all queues are empty return -1 (don't move)
 		return -1;
 	else if (upQ.empty() && downQ.empty())				//If the request queues are empty, return the onBoard destination
 		return (onBoard[0].dest);
@@ -175,5 +175,13 @@ void Elevator::sortOB(vector<requests>& v1) {
 		for (vector<requests>::iterator iterj = iteri; iterj != v1.begin(); iterj--)
 			if (abs(iterj->dest - *curr) < abs((iterj - 1)->dest - *curr))
 				iter_swap(iterj, (iterj - 1));
+}
+
+bool Elevator::isEmpty()
+{
+	if (upQ.empty() && downQ.empty() && onBoard.empty())
+		return true;
+	else
+		return false;
 }
 

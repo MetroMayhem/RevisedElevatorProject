@@ -29,5 +29,5 @@ public:
 	void update(vector<requests> reqs);
 	void sortR(vector<requests>& v1);
 	void sortOB(vector<requests>& v1);
-	
+	bool isEmpty();
 };
