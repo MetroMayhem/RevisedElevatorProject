@@ -19,11 +19,9 @@ private:
 public:
 	Elevator();
 	Elevator(int _floors);
-	~Elevator();
 	void getUpQ();
 	void getDownQ();
 	void Add(requests req);
-	//void Gtfo();
 	int findNext();
 	void move(int floor, vector<requests> newR);
 	void update(vector<requests> reqs);
