@@ -262,19 +262,15 @@ void Elevator::move(int floor){
 		downQ.erase(downQ.begin());
 	}
 
-
-
 }
 
 void Elevator::update(vector<requests> reqs) {
-	
 	for (vector<requests>::iterator itr = reqs.begin(); itr != reqs.end(); itr++) 
 			Add(*itr);
 		
 	sortR(upQ);
 	sortR(downQ);
 	sortOB(onBoard);
-
 }
 
 void Elevator::sortR(vector<requests>& v1) {	//Selection sort for request queues
