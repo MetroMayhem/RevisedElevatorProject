@@ -41,9 +41,6 @@ void Elevator::Add(requests req) {
 		downQ.push_back(req);
 }
 
-
-
-
 	/*vector<requests>::iterator iter;
 	if (req.direction == 1) {					//If the request is for the up direction
 		if (upQ.empty())						//If Queue is empty push in request
@@ -172,110 +169,59 @@ void Elevator::Gtfo() {
 
 }
 
-int Elevator::findNext()
-{
+int Elevator::findNext() {
+	//Function takes into consideration the distance between requests and destinations of people on and off the elevator
+	//Finds the next floor that is closest to the elevator with people on board taking slight precedence to new requests
+	//O(1) time complexity
 
-	/*if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
-		next.push_back(upQ[0]);
+	requests req(0,0,0,0);			//Temporary request
 
-	}
-	else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {
-		if ((upQ[0].curr == downQ[0].curr) && (dir == 1)) {
-			next.push_back(upQ[0]);
-			next.push_back(downQ[0]);
-		}
-		else if (upQ[0].curr == downQ[0].curr) {
-			next.push_back(downQ[0]);
-			next.push_back(upQ[0]);
-		}
-		else if (dir == 1) {
-			if (upQ[0].curr > downQ[0].curr)
-				next.push_back(upQ[0]);
-			else
-				next.push_back(downQ[0]);
-		}
-		else {
-			if (upQ[0].curr < downQ[0].curr)
-				next.push_back(upQ[0]);
-			else
-				next.push_back(downQ[0]);
-		}
-	}
-	else
-		next.push_back(downQ[0]);
-
-	int a = 0;
-
-	while (true) {
-		bool exe = 0;
-
-		if ((a + 1) != upQ.size()) {
-			if (upQ[a].curr == upQ[a + 1].curr) {
-				next.push_back(upQ[a + 1]);
-				exe = 1;
-			}
-		}
-
-		if ((a + 1) != downQ.size()) {
-			if (downQ[a].curr == downQ[a + 1].curr) {
-				next.push_back(downQ[a + 1]);
-				exe = 1;
-			}
-		}
-
-		if (!exe)
-			break;
-
-		a++;
-	}
-	*/
-	requests req(0,0,0,0);
-	if (upQ.empty() && downQ.empty() && onBoard.empty())
+	if (upQ.empty() && downQ.empty() && onBoard.empty())	//If all queues are empty return -1 (don't move)
 		return -1;
-	else if (upQ.empty() && downQ.empty())
+	else if (upQ.empty() && downQ.empty())				//If the request queues are empty, return the onBoard destination
 		return (onBoard[0].dest);
-	else if (upQ.empty())
+	else if (upQ.empty())						//If upQ is empty make the temp request the next down request
 		req = downQ[0];
 	else
-		req = upQ[0];
+		req = upQ[0];					//If downQ is empty make temp request the next up request
 
 
+	if (!upQ.empty() && !downQ.empty()) {				//As long as both queues are not empty, compare requests
+		if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr))		//If the distance from the elevator to the up request is less than the down request
+			req = upQ[0];											//temp request is next up request
 
-	if (abs(upQ[0].curr - *curr) < abs(downQ[0].curr - *curr)) {
-		req = upQ[0];
-
-	}
-	else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {
-		if ((upQ[0].curr == downQ[0].curr) && (dir == 1))
-			req = upQ[0];
-		else if (upQ[0].curr == downQ[0].curr)
-			req = downQ[0];
-		else if (dir == 1) {
-			if (upQ[0].curr > downQ[0].curr)
+		else if (abs(upQ[0].curr - *curr) == abs(downQ[0].curr - *curr)) {		//If both requests are the same distance away from the elevator
+			if ((upQ[0].curr == downQ[0].curr))				//If the requests are for the same floor, return the floor
 				req = upQ[0];
-			else
-				req = downQ[0];
+			else if (dir == 1) {					//If the requests are different floors and elevator is moving up
+				if (upQ[0].curr > downQ[0].curr)	//Make the temp request the request that is above the elevator
+					req = upQ[0];
+				else
+					req = downQ[0];
+			}
+			else {									//^^vice versa^^
+				if (upQ[0].curr < downQ[0].curr)
+					req = upQ[0];
+				else
+					req = downQ[0];
+			}
 		}
-		else {
-			if (upQ[0].curr < downQ[0].curr)
-				req = upQ[0];
-			else
-				req = downQ[0];
-		}
+		else
+			req = downQ[0];					//down request is closer than up request
 	}
-	else
-		req = downQ[0];
 
-	if (onBoard.empty())
+	if (onBoard.empty())			//If onBoard is empty return temp request
 		return req.curr;
 	else {
-		if (abs(req.curr - *curr) < abs(onBoard[0].dest - *curr))
+		if (abs(req.curr - *curr) < abs(onBoard[0].dest - *curr))		//Same logic for finding temp request
 			return req.curr;
 
 		else if (abs(req.curr - *curr) == abs(onBoard[0].dest - *curr)) {
 			if (req.curr == onBoard[0].dest)
 				return req.curr;
-			else if (dir == 1) {
+			else
+				return onBoard[0].dest;			//If request and destination are not the same floor, person onBoard takes precedence
+			/*else if (dir == 1) {
 				if (req.curr > onBoard[0].dest)
 					return req.curr;
 				else
@@ -287,6 +233,7 @@ int Elevator::findNext()
 				else
 					return onBoard[0].dest;
 			}
+			*/
 		}
 		else
 			return onBoard[0].dest;
