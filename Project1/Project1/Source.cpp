@@ -68,11 +68,28 @@ void simulation(int times, vector<Elevator> elevators) {
 				elevators[k].move(elevators[k].findNext(), newRequests[k]);
 			}
 		newRequests.clear();
-
-		/*while ((!upQ.empty() || !downQ.empty()) || !onBoard.empty()) {
-			move(findNext(), sim);
-		}*/
 	}
+	switch (elevators.size()) {
+	case 1:
+		while (!elevators[0].isEmpty())
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+		break;
+	case 2:
+		while (!elevators[0].isEmpty() || !elevators[1].isEmpty()) {
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+			elevators[1].move(elevators[1].findNext(), newRequests[1]);
+		}
+		break;
+	case 3:
+		while (!elevators[0].isEmpty() || !elevators[1].isEmpty() || !elevators[2].isEmpty()) {
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+			elevators[1].move(elevators[1].findNext(), newRequests[1]);
+			elevators[2].move(elevators[2].findNext(), newRequests[2]);
+		}
+		break;
+	}
+	
+	return;
 }
 
 
