@@ -1,6 +1,5 @@
 #include "Elevator.h"
 
-
 Elevator::Elevator() {
 	//Default constructor
 	floors.push_back(0);
@@ -17,8 +16,7 @@ Elevator::Elevator(int _floors) {
 }
 
 
-int Elevator::getSize()
-{
+int Elevator::getSize() {
 	return floors.size();
 }
 
@@ -171,8 +169,7 @@ void Elevator::sortOB(vector<requests>& v1) {
 				iter_swap(iterj, (iterj - 1));
 }
 
-bool Elevator::isEmpty()
-{
+bool Elevator::isEmpty() {
 	if (upQ.empty() && downQ.empty() && onBoard.empty())
 		return true;
 	else
