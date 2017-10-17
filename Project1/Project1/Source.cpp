@@ -55,26 +55,26 @@ void simulation(int times, vector<Elevator> elevators) {
 	//Plausible worst case is O(n^3) because the conditions equal to approcimately T(n) = n^2 * n * size * n^2
 	//Best case is O(n)
 
-	srand((unsigned int)time(NULL));
-	vector<vector<requests>> newRequests(elevators.size());
+	srand((unsigned int)time(NULL));	
+	vector<vector<requests>> newRequests(elevators.size());		//A vector that holds vectors of requests that get put in th emove and update functions
 
 	requests temp;
 	for (int i = 0; i < times; i++) {
-		for (int itr = 0; itr < elevators.size(); itr++)
+		for (int itr = 0; itr < elevators.size(); itr++)		//Clear out old requests
 			newRequests[itr].clear();
 		for (int j = 0; j < (rand() % 4); j++) {
-			do {
-				temp.curr = (rand() % elevators[0].getSize());
+			do {		
+				temp.curr = (rand() % elevators[0].getSize());		//Create random "requests" to be added
 				temp.dest = (rand() % elevators[0].getSize());
 			} while (temp.curr == temp.dest);
-			if (temp.curr < temp.dest)
+			if (temp.curr < temp.dest)		//Add the request's direction
 				temp.direction = 1;
 			else
 				temp.direction = 0;
-			newRequests[optimalQ(temp, elevators)].push_back(temp);
+			newRequests[optimalQ(temp, elevators)].push_back(temp);		//Add the request to the optimal queue
 		}
 
-		if (i == 0)
+		if (i == 0)			//Move the elevator
 			for (int k = 0; k < elevators.size(); k++) {
 				elevators[k].move(0, newRequests[k]);
 			}
@@ -84,9 +84,9 @@ void simulation(int times, vector<Elevator> elevators) {
 			}
 		
 	}
-	for (int itr = 0; itr < elevators.size(); itr++)
+	for (int itr = 0; itr < elevators.size(); itr++)		
 		newRequests[itr].clear();
-	switch (elevators.size()) {
+	switch (elevators.size()) {		//Clears out the rest of the passengers and drops them off when the iterations are done
 	case 1:
 		while (!elevators[0].isEmpty())
 			elevators[0].move(elevators[0].findNext(), newRequests[0]);
