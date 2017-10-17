@@ -21,7 +21,6 @@ private:
 public:
 	Elevator();
 	Elevator(int _floors);
-	Elevator(int _floors, int _numOfElevators);
 	int getSize();
 	void Add(requests req);
 	int findNext();

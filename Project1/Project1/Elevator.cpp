@@ -16,11 +16,6 @@ Elevator::Elevator(int _floors) {
 	dir = 1;
 }
 
-Elevator::Elevator(int _floors, int _numOfElevators)
-{
-	vector<Elevator> elevators;
-
-}
 
 int Elevator::getSize()
 {
