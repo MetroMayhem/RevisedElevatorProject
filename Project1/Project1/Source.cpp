@@ -87,17 +87,17 @@ void simulation(int times, vector<Elevator> elevators) {
 	for (int itr = 0; itr < elevators.size(); itr++)		
 		newRequests[itr].clear();
 	switch (elevators.size()) {		//Clears out the rest of the passengers and drops them off when the iterations are done
-	case 1:
+	case 1:		//While the first elevator isn't empty...drop off passengers
 		while (!elevators[0].isEmpty())
 			elevators[0].move(elevators[0].findNext(), newRequests[0]);
 		break;
-	case 2:
+	case 2:		//While elevator 1 or 2 aren't empty, drop off the passengers
 		while (!elevators[0].isEmpty() || !elevators[1].isEmpty()) {
 			elevators[0].move(elevators[0].findNext(), newRequests[0]);
 			elevators[1].move(elevators[1].findNext(), newRequests[1]);
 		}
 		break;
-	case 3:
+	case 3:		//While any elevator isn't empty, drop off the passengers
 		while (!elevators[0].isEmpty() || !elevators[1].isEmpty() || !elevators[2].isEmpty()) {
 			elevators[0].move(elevators[0].findNext(), newRequests[0]);
 			elevators[1].move(elevators[1].findNext(), newRequests[1]);
@@ -114,7 +114,7 @@ int optimalQ(requests req, vector<Elevator> Elevators) {
 	//FInds which elevator will be closest to the new request when the elevator processes new requests
 	//Time complexity O(1) only checks if/else conditions
 	switch (Elevators.size()) {
-	case 1:		//If there is one elvator push the request to it
+	case 1:		//If there is one elevator push the request to it
 		return 0;
 	case 2:		//If there are two elevators
 		if (Elevators[0].findNext() == -1)	//If the first elevator has no floor to go to, give it the request
