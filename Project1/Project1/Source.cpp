@@ -53,7 +53,7 @@ void simulation(int times, vector<Elevator> elevators) {
 	//and makes sure it drops off all the passengers.
 	//Time complexity in the absolute worst case is infinite, if the two random numbers generated are 
 	//ALWAYS the same, which is unlikely.
-	//Plausible worst case is O(n^3) because the conditions equal to approcimately T(n) = n^2 * n * size * n^2
+	//Plausible worst case is O(n^3) because the conditions equal to approcimately T(n) = times * elevator size * n^2
 	//Best case is O(n)
 
 	srand((unsigned int)time(NULL));	
