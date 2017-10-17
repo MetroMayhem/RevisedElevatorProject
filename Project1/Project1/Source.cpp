@@ -16,6 +16,7 @@ int backMenu();
 
 int main() {
 	//LIGHTLY TESTED UI
+	//Outputs how long requests are waiting for the elevator to pick them up
 	vector<Elevator> elevators;
 	bool simulating = 1;
 	while (simulating) {
