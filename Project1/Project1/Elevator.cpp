@@ -16,6 +16,12 @@ Elevator::Elevator(int _floors) {
 	dir = 1;
 }
 
+
+int Elevator::getSize()
+{
+	return floors.size();
+}
+
 void Elevator::Add(requests req) {
 	//Function takes into consideration which queue the request needs to be in based on where the request is coming from
 	//O(1) time complexity
@@ -32,7 +38,7 @@ int Elevator::findNext() {
 
 	requests req;			//Temporary request
 
-	if (upQ.empty() && downQ.empty() && onBoard.empty())	//If all queues are empty return -1 (don't move)
+	if (isEmpty())	//If all queues are empty return -1 (don't move)
 		return -1;
 	else if (upQ.empty() && downQ.empty())				//If the request queues are empty, return the onBoard destination
 		return (onBoard[0].dest);
@@ -139,7 +145,7 @@ void Elevator::update(vector<requests> reqs) {
 }
 
 void Elevator::sortR(vector<requests>& v1) {	
-	//Selection sort for request queues
+	//Insertion sort for request queues
 	//Best case: O(n)   (sorted queue)
 	//Worst case: O(n^2) (reversed queue)
 
@@ -152,7 +158,7 @@ void Elevator::sortR(vector<requests>& v1) {
 				iter_swap(iterj, (iterj - 1));
 }
 void Elevator::sortOB(vector<requests>& v1) {		
-	//Selection sort for onBoard queue
+	//Insertion sort for onBoard queue
 	//Best case: O(n)   (sorted queue)
 	//Worst case: O(n^2) (reversed queue)
 
@@ -165,31 +171,11 @@ void Elevator::sortOB(vector<requests>& v1) {
 				iter_swap(iterj, (iterj - 1));
 }
 
-void Elevator::simulation(int times) {
-	srand( (unsigned int) time(NULL));
-	vector<requests> sim;
-	requests temp;
-	for (int i = 0; i < times; i++) {
-		sim.clear();
-		for (int j = 0; j < (rand() % 4); j++) {
-			do {
-				temp.curr = (rand() % floors.size());
-				temp.dest = (rand() % floors.size());
-			} while (temp.curr == temp.dest);
-			if (temp.curr < temp.dest)
-				temp.direction = 1;
-			else
-				temp.direction = 0;
-			sim.push_back(temp);
-		}
-		if (i == 0)
-			move(0, sim);
-		else
-			move(findNext(), sim);
-	}
-	sim.clear();
-
-	while ((!upQ.empty() || !downQ.empty()) || !onBoard.empty()) {
-		move(findNext(), sim);
-	}
+bool Elevator::isEmpty()
+{
+	if (upQ.empty() && downQ.empty() && onBoard.empty())
+		return true;
+	else
+		return false;
 }
+

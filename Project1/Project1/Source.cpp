@@ -4,34 +4,112 @@
 
 using namespace std;
 
+void simulation(int times, vector<Elevator> elevators);
+int optimalQ(requests req, vector<Elevator> Elevators);
 
 int main() {
 
 	int floors = 10;
 
-	Elevator elevator = Elevator(floors);
-	
-	/*requests r1 = requests(7, 3, 0);
-	requests r2 = requests(4, 6, 1);
-	requests r3 = requests(5, 6, 1);
-	requests r4 = requests(4, 1, 0);
-	requests r5 = requests(8, 5, 0);
-	requests r6 = requests(1, 4, 1);
-	requests r7 = requests(6, 4, 0);
-	requests r8 = requests(9, 5, 0);
-	requests r9 = requests(2, 8, 1);*/
-	
-	//
-	//vector<requests> vec = { r1, r2, r3, r4, r5, r6, r7 };
+	Elevator e1 = Elevator(floors);
+	Elevator e2 = Elevator(floors);
+	Elevator e3 = Elevator(floors);
 
-	//elevator.move(0, vec);
-	//vec.clear();
-	//elevator.move(elevator.findNext(), vec);
-	//vec = { r8, r9 };
-	//elevator.move(elevator.findNext(), vec);
-	
-	elevator.simulation(3);
+	vector<Elevator> elevators = { e1};
+	simulation(10, elevators);
 
 	cin.get();
+
+}
+
+void simulation(int times, vector<Elevator> elevators) {
+	srand((unsigned int)time(NULL));
+	vector<vector<requests>> newRequests(elevators.size());
+
+	requests temp;
+	for (int i = 0; i < times; i++) {
+		for (int itr = 0; itr < elevators.size(); itr++)
+			newRequests[itr].clear();
+		for (int j = 0; j < (rand() % 4); j++) {
+			do {
+				temp.curr = (rand() % elevators[0].getSize());
+				temp.dest = (rand() % elevators[0].getSize());
+			} while (temp.curr == temp.dest);
+			if (temp.curr < temp.dest)
+				temp.direction = 1;
+			else
+				temp.direction = 0;
+			newRequests[optimalQ(temp, elevators)].push_back(temp);
+		}
+
+		if (i == 0)
+			for (int k = 0; k < elevators.size(); k++) {
+				elevators[k].move(0, newRequests[k]);
+			}
+		else
+			for (int k = 0; k < elevators.size(); k++) {
+				elevators[k].move(elevators[k].findNext(), newRequests[k]);
+			}
+		
+	}
+	for (int itr = 0; itr < elevators.size(); itr++)
+		newRequests[itr].clear();
+	switch (elevators.size()) {
+	case 1:
+		while (!elevators[0].isEmpty())
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+		break;
+	case 2:
+		while (!elevators[0].isEmpty() || !elevators[1].isEmpty()) {
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+			elevators[1].move(elevators[1].findNext(), newRequests[1]);
+		}
+		break;
+	case 3:
+		while (!elevators[0].isEmpty() || !elevators[1].isEmpty() || !elevators[2].isEmpty()) {
+			elevators[0].move(elevators[0].findNext(), newRequests[0]);
+			elevators[1].move(elevators[1].findNext(), newRequests[1]);
+			elevators[2].move(elevators[2].findNext(), newRequests[2]);
+		}
+		break;
+	}
+	
+	return;
+}
+
+
+int optimalQ(requests req, vector<Elevator> Elevators) {
+	switch (Elevators.size()) {
+	case 1:
+		return 0;
+	case 2:
+		if (Elevators[0].findNext() == -1)
+			return 0;
+		else if (Elevators[1].findNext() == -1)
+			return 1;
+		else {
+			if (abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
+				return 0;
+			else
+				return 1;
+		}
+	case 3:
+		if (Elevators[0].findNext() == -1)
+			return 0;
+		else if (Elevators[1].findNext() == -1)
+			return 1;
+		else if (Elevators[2].findNext() == -1)
+			return 2;
+		else {
+			if ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[1].findNext()))
+				&& ((abs(req.curr - Elevators[0].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+				return 0;
+			else if ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[0].findNext()))
+				&& ((abs(req.curr - Elevators[1].findNext()) < abs(req.curr - Elevators[2].findNext()))))
+				return 1;
+			else
+				return 2;
+		}
+	}
 
 }

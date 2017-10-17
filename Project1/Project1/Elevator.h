@@ -21,12 +21,12 @@ private:
 public:
 	Elevator();
 	Elevator(int _floors);
+	int getSize();
 	void Add(requests req);
 	int findNext();
 	void move(int floor, vector<requests> newR);
 	void update(vector<requests> reqs);
 	void sortR(vector<requests>& v1);
 	void sortOB(vector<requests>& v1);
-
-	void simulation(int times);
+	bool isEmpty();
 };
