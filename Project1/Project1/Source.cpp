@@ -44,6 +44,17 @@ int main() {
 	}
 }
 
+//The basic simulation function that takes in the number of times to run the simulation
+//and the vector of elevators to run the program on (from 1 to 3 elevators).
+//For each iteration of the simulation, it creates random requests to add to the elevator queues.
+//After the final iteration of the for loop, when the elevator is full of people, it runs through
+//and makes sure it drops off all the passengers.
+//Time complexity in the absolute worst case is infinite, if the two random numbers generated are 
+//ALWAYS the same, which is unlikely.
+//Plausible worst case is O(n^3) because the conditions equal to approcimately T(n) = n^2 * n * size * n^2
+//Best case is O(n)
+
+
 void simulation(int times, vector<Elevator> elevators) {
 	srand((unsigned int)time(NULL));
 	vector<vector<requests>> newRequests(elevators.size());
