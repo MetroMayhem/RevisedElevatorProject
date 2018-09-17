@@ -1,6 +1,6 @@
 //303 Project 1
 //Elevator Simulator
-//Kory Overbay, Alec Shern, Joel Knutson
+//Kory Overbay, Alec Shern
 //10-16-2017
 
 #include "Elevator.h"
